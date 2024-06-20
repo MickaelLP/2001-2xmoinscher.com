@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+    {# categorie.id #}
+    <h1>Categorie {{categorie.nom}}</h1>
+
+    <section class="text-center">
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">éditer la catégorie</a>
+        {% endif %}
+        
+        <a href="{{ path('app_categorie_index') }}">Retourner au tri de catégorie</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ include('categorie/_delete_form.html.twig') }}
+        {% endif %}
+        
+
+        <div class="row d-flex flex-row justify-content-center">
+
+            {% for produit in categorie.produit %}
+            <div class="cards py-3 col-md-4 mx-4 my-4 rounded-3">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">éditer</a>
+                {% endif %}
+                <div class="d-flex justify-content-center">
+                    <img class="d-block" height="200" width="200" src="{{produit.image}}" alt="{{produit.nom}}">
+                </div>
+                <div class="text-center">
+                    <h1 class="cards__h1">{{produit.nom}}</h1>
+                    <p class="description--maxWidth">{{produit.description}}</p>
+                    <div class="d-flex flex-row justify-content-between">
+                        <p>Note : {{produit.note}}/5</p>
+                        <p>Etat : {{produit.categorie.nom}}</p>
+                        <p>{{produit.prix}} €</p>
+                    </div>
+                    <div>
+                        <a href="#">J'achète</a>
+
+                        <a href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir le détail</a>
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            {% else %}
+                    <p>Aucun resultat trouvé !</p>
+            {% endfor %}
+
+            
+
+        </div>
+
+
+        
+    
+    </section>
+{% endblock %}

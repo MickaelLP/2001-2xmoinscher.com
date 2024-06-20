@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+
+<h1>Votre panier</h1>
+
+{% set total = 0 %}
+<section>
+
+    <div class="row d-flex flex-row justify-content-center">
+
+        {% for produit in produits %}
+
+            <div class="cards py-3 col-md-4 mx-4 my-4 rounded-3">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">éditer</a>
+                {% endif %}
+                <div class="d-flex justify-content-center">
+                    <img class="d-block" height="200" width="200" src="{{produit.image}}" alt="{{produit.nom}}">
+                </div>
+                <div class="text-center">
+                    <h1 class="cards__h1">{{produit.nom}}</h1>
+                    <p class="description--maxWidth">{{produit.description}}</p>
+                    <div class="d-flex flex-row justify-content-between">
+                        <p>Note : {{produit.note}}/5</p>
+                        <p>Etat : {{produit.categorie.nom}}</p>
+                        <p>{{produit.prix}} €</p>
+                    </div>
+                    <div>
+                        <a href="{{ path('produitSupprimer', {'id': produit.id}) }}">Supprimer du panier</a>
+
+                        <a href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir le détail</a>
+                        
+                    </div>
+                </div>
+                
+            </div>
+
+            {% set total = total + produit.prix %}
+
+        {% else %}
+            <p>Aucun jeu trouvé !</p>
+        {% endfor %}
+
+        <div class="text-center">
+            <p>Total de votre panier : {{total}} €</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

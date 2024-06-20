@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit vendu{% endblock %}
+
+{% block body %}
+
+<h1>Nos produits vendu</h1>
+
+{% set total = 0 %}
+<section>
+
+    <div class="row d-flex flex-row justify-content-center text-center">
+
+        <h1>Acheté par</h1>
+
+        {% set total = 0 %}
+
+        {% for user in users %}
+
+        {% set total = total + 1 %}
+
+            <p>{{user.pseudo}}</p>
+
+        {% else %}
+            <p>Aucun utilisateur trouvé !</p>
+        {% endfor %}
+
+        <h2>Nombre de vente total</h2>
+        <h1>{{total}}</h1>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

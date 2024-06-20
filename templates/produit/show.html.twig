@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du jeu{% endblock %}
+
+{% block body %}
+    
+
+    {# <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produit.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ produit.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ produit.prix }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ produit.note }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ produit.image }}</td>
+            </tr>
+        </tbody>
+    </table> #}
+
+    <h1>Détails du jeu</h1>
+    <section class="detail-jeu">
+        
+        <div class="text-center">
+            <h1>{{produit.nom}}</h1>
+            <img height="400" width="400" src="{{produit.image}}" alt="{{produit.nom}}">
+            <h2>Description du jeu</h2>
+            <p>{{produit.description}}</p>
+            <h2>Note</h2>
+            <p>{{produit.note}}/5</p>
+            <h2>Prix</h2>
+            <h3><span>{{produit.prix}}</span> €</h3>
+            <a class="d-block" href="{{ path('produitAjouter', {id:produit.id}) }}">Mettre dans mon panier</a>
+
+            <a class="d-block" href="{{ path('app_produit_index') }}">Retourner voir les jeux</a>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="d-block" href="{{ path('app_produit_edit', {'id': produit.id}) }}">éditer</a>
+                {{ include('produit/_delete_form.html.twig') }}
+        
+            {% endif %}
+        </div>
+    
+    
+        
+    </section>
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un jeu au catalogue{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un jeu au catalogue</h1>
+
+    {{ include('produit/_form.html.twig') }}
+
+    <a href="{{ path('app_produit_index') }}">Retour au catalogue</a>
+{% endblock %}

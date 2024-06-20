@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalogue de jeux{% endblock %}
+
+{% block body %}
+    <h1>Catalogue de jeux</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_produit_new') }}">Ajouter un nouveau jeu</a>
+    {% endif %}
+
+    {# <td>{{ produit.id }}</td>
+    <td>{{ produit.nom }}</td>
+    <td>{{ produit.prix }}</td>
+    <td>{{ produit.note }}</td>
+    <td>{{ produit.description }}</td>
+    <td>{{ produit.image }}</td>
+    <td>
+        <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
+        <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+    </td> #}
+
+    <section>
+        <div class="row d-flex flex-row justify-content-center">
+
+            {% for produit in produits %}
+            <div class="cards py-3 col-md-4 mx-4 my-4 rounded-3">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">éditer</a>
+                {% endif %}
+                <div class="d-flex justify-content-center">
+                    <img class="d-block" height="200" width="200" src="{{produit.image}}" alt="{{produit.nom}}">
+                </div>
+                <div class="text-center">
+                    <h1 class="cards__h1">{{produit.nom}}</h1>
+                    <p class="description--maxWidth">{{produit.description}}</p>
+                    <div class="d-flex flex-row justify-content-between">
+                        <p>Note : {{produit.note}}/5</p>
+                        <p>Etat : {{produit.categorie.nom}}</p>
+                        <p>{{produit.prix}} €</p>
+                    </div>
+                    <div>
+                        <a href="{{ path('produitAjouter', {id:produit.id}) }}">J'achète</a>
+
+                        <a href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir le détail</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('produitvendu', {'id': produit.id}) }}">Nombre de vente</a>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+                
+            </div>
+            {% else %}
+                    <p>Aucun resultat trouvé !</p>
+            {% endfor %}
+
+        </div>
+
+
+    </section>
+
+    
+{% endblock %}
